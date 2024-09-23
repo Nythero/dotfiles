@@ -18,20 +18,20 @@ filetype plugin indent on
 syntax on
 colorscheme sorbet
 
-set shell=/bin/bash
-
 "set gp=git\ grep\ -n
 
 let @z='a<'
 let @x='a>'
 
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+
 xnoremap "+y y:call system("wl-copy", @")<cr>
 nnoremap "+p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>p
 nnoremap "*p :let @"=substitute(system("wl-paste --no-newline --primary"), '<C-v><C-m>', '', 'g')<cr>p
 
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+let mapleader=","
+nnoremap <leader>e :Lex<CR>:vertical resize 30<CR>
 
 call plug#begin()
 
