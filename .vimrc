@@ -32,6 +32,9 @@ nnoremap "*p :let @"=substitute(system("wl-paste --no-newline --primary"), '<C-v
 
 let mapleader=","
 nnoremap <leader>e :Lex<CR>:vertical resize 30<CR>
+nnoremap <leader>f :GFiles<CR>
+nnoremap <leader>v :e ~/.vimrc<CR>
+
 
 call plug#begin()
 
@@ -56,7 +59,8 @@ function! s:on_lsp_buffer_enabled() abort
     nmap <buffer> [g <plug>(lsp-previous-diagnostic)
     nmap <buffer> ]g <plug>(lsp-next-diagnostic)
     nmap <buffer> K <plug>(lsp-hover)
-    nmap <buffer> <leader>f <plug>(lsp-document-format)
+    nmap <buffer> <leader>i <plug>(lsp-document-format)
+    nmap <buffer> <leader>a <plug>(lsp-code-action)
 endfunction
 
 augroup lsp_install
