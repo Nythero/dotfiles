@@ -4,6 +4,7 @@ set smarttab
 set expandtab
 set confirm
 set nocompatible
+set ruler
 
 set number
 set relativenumber
@@ -16,25 +17,36 @@ set path+=**
 
 filetype plugin indent on
 syntax on
-colorscheme sorbet
-
-"set gp=git\ grep\ -n
-
-let @z='a<'
-let @x='a>'
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
-
-xnoremap "+y y:call system("wl-copy", @")<cr>
-nnoremap "+p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>p
-nnoremap "*p :let @"=substitute(system("wl-paste --no-newline --primary"), '<C-v><C-m>', '', 'g')<cr>p
 
 let mapleader=","
 nnoremap <leader>e :Lex<CR>:vertical resize 30<CR>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>v :e ~/.vimrc<CR>
+nnoremap <leader>V :so %<CR>
+nnoremap <leader>j i<CR><Esc>p<Esc>
 
+" Quickfix
+nnoremap <leader>cc :cclose<CR>
+nnoremap <leader>co :copen<CR>
+nnoremap <leader>, :cprev<CR>
+nnoremap <leader>. :cnext<CR>
+
+nnoremap <C-u> <C-u> zz
+nnoremap <C-d> <C-d> zz
+vnoremap <leader>w :call WrapWith()<CR>
+vnoremap <leader>/ y/<C-R>"<CR>
+vnoremap <leader>z <
+vnoremap <leader>x >
+
+nnoremap <leader>Z i<
+nnoremap <leader>X i>
+nnoremap <leader>z a<
+nnoremap <leader>x a>
+noremap <leader>zz < 
+noremap <leader>xx > 
 
 call plug#begin()
 
@@ -42,6 +54,7 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'editorconfig/editorconfig-vim'
 
 call plug#end()
 
@@ -61,6 +74,11 @@ function! s:on_lsp_buffer_enabled() abort
     nmap <buffer> K <plug>(lsp-hover)
     nmap <buffer> <leader>i <plug>(lsp-document-format)
     nmap <buffer> <leader>a <plug>(lsp-code-action)
+endfunction
+
+function! WrapWith() 
+    let character = input('Insert character: ')
+    execute "normal! gv c".character.character."\<Esc>P"
 endfunction
 
 augroup lsp_install
